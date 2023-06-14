@@ -34,7 +34,7 @@ class App:
     def draw(self):
         self.draw_background()
         self.get_distance()
-        self.draw_line_btwn_point_and_cursor()
+        self.draw_line_between_point_and_cursor()
         self.make_point()
         self.print_distance_on_line()
 
