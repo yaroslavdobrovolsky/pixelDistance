@@ -50,8 +50,8 @@ class App:
             self.point_positions[1] = self.cursor_pos
 
     def get_distance(self):
-        self.distance = int(math.sqrt(abs(self.point_positions[0][0] - self.point_positions[1][0]) ** 2 +
-                                      abs(self.point_positions[0][1] - self.point_positions[1][0]) ** 2)) + 1
+        self.distance = int(math.sqrt((self.point_positions[0][0] - self.point_positions[1][0]) ** 2 +
+                                      (self.point_positions[0][1] - self.point_positions[1][1]) ** 2)) + 1
 
     def draw_line_between_point_and_cursor(self):
         pygame.draw.line(self.screen, consts.LINE_COLOR, self.point_positions[0], self.point_positions[1], 1)
