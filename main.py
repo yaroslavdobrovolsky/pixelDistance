@@ -47,9 +47,6 @@ class App:
         if pygame.mouse.get_pressed()[0]:
             self.point_position = self.cursor_pos
 
-        pygame.draw.circle(self.screen, consts.POINT_COLOR, self.cursor_pos, consts.POINT_RADIUS)
-        pygame.draw.circle(self.screen, consts.POINT_COLOR, self.point_position, consts.POINT_RADIUS)
-
     def get_distance(self):
         self.distance = int(math.sqrt(abs(self.point_position[0] - self.cursor_pos[0]) ** 2 +
                                       abs(self.point_position[1] - self.cursor_pos[1]) ** 2)) + 1
