@@ -13,6 +13,8 @@ class App:
 
         pygame.init()
 
+        self.font = pygame.font.Font("freesansbold.ttf", consts.FONT_SIZE)
+
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         pygame.display.set_caption(consts.CAPTION)
 
@@ -36,6 +38,7 @@ class App:
         self.get_distance()
         self.draw_line_between_point_and_cursor()
         self.make_point()
+        self.print_coordinates_on_points()
         self.print_distance_on_line()
 
         pygame.display.flip()
@@ -52,11 +55,10 @@ class App:
                                       abs(self.point_position[1] - self.cursor_pos[1]) ** 2)) + 1
 
     def draw_line_between_point_and_cursor(self):
-        pygame.draw.line(self.screen, consts.LINE_COLOR, self.point_position, self.cursor_pos, 2)
+        pygame.draw.line(self.screen, consts.LINE_COLOR, self.point_position, self.cursor_pos, 1)
 
     def print_distance_on_line(self):
-        font = pygame.font.Font("freesansbold.ttf", 20)
-        text = font.render(str(self.distance), True, consts.FONT_COLOR, consts.BACKGROUND_FONT_COLOR)
+        text = self.font.render(str(self.distance), True, consts.FONT_COLOR, consts.BACKGROUND_FONT_COLOR)
         text_rect = text.get_rect()
         text_rect.center = ((self.point_position[0] + self.cursor_pos[0]) / 2,
                             (self.point_position[1] + self.cursor_pos[1]) / 2)
@@ -64,8 +66,20 @@ class App:
         self.screen.blit(text, text_rect)
 
     def print_coordinates_on_points(self):
-        # todo: printing coordinates of points
-        pass
+        # todo: make coordinate render with multiple lines
+
+        first_point_coordinates_text = self.font.render(str(self.point_position), True,
+                                                        consts.FONT_COLOR, consts.BACKGROUND_FONT_COLOR)
+        first_point_coordinates_text_rect = first_point_coordinates_text.get_rect()
+        first_point_coordinates_text_rect.center = self.point_position
+
+        second_point_coordinates_text = self.font.render(str(self.cursor_pos), True,
+                                                         consts.FONT_COLOR, consts.BACKGROUND_FONT_COLOR)
+        second_point_coordinates_text_rect = second_point_coordinates_text.get_rect()
+        second_point_coordinates_text_rect.center = self.cursor_pos
+
+        self.screen.blit(first_point_coordinates_text, first_point_coordinates_text_rect)
+        self.screen.blit(second_point_coordinates_text, second_point_coordinates_text_rect)
 
     def draw_background(self):
         img = pygame.image.load(consts.SCREENSHOT_NAME)
