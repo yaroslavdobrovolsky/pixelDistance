@@ -1,46 +1,23 @@
 import pygame
-import sys
+import src.consts as consts
 import math
-import pyautogui
-import os
-import consts
-import render_text
+import src.render_text as render_text
 
 
-class App:
-    def __init__(self):
-        self.screenshot = pyautogui.screenshot()
-        self.screenshot.save(consts.SCREENSHOT_NAME)
-
-        pygame.init()
-
-        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        pygame.display.set_caption(consts.CAPTION)
-
+class Ruler:
+    def __init__(self, surface: pygame.Surface):
+        self.screen = surface
         self.distance = 0
         self.cursor_pos = pygame.mouse.get_pos()
         self.point_positions = [self.cursor_pos, self.cursor_pos]
 
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        os.remove(consts.SCREENSHOT_NAME)
-                        pygame.quit()
-                        sys.exit()
-
-            self.draw()
-            self.cursor_pos = pygame.mouse.get_pos()
-
     def draw(self):
-        self.draw_background()
         self.get_distance()
         self.draw_line_between_point_and_cursor()
         self.make_point()
         self.print_coordinates_on_points()
         self.print_distance_on_line()
-
-        pygame.display.flip()
+        self.cursor_pos = pygame.mouse.get_pos()
 
     def make_point(self):
         if pygame.mouse.get_pressed()[0]:
@@ -71,11 +48,3 @@ class App:
                                          [str(self.point_positions[1][0]), str(self.point_positions[1][1])],
                                          self.point_positions[1], consts.FONT, consts.FONT_SIZE,
                                          consts.FONT_COLOR, consts.BACKGROUND_FONT_COLOR)
-
-    def draw_background(self):
-        img = pygame.image.load(consts.SCREENSHOT_NAME)
-        self.screen.blit(img, (0, 0))
-
-
-if __name__ == "__main__":
-    a = App()
